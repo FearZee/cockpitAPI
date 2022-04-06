@@ -21,5 +21,5 @@ export const UserRoleModel = sequelize.define<UserRoleInstance>('user_role',{
     date_of_creation: {type: DataTypes.STRING}
 })
 
-UserRoleModel.belongsTo(RoleModel, {foreignKey: 'id', targetKey: 'role_id'})
-UserRoleModel.belongsTo(UserModel, {foreignKey: 'id', targetKey: 'user_id'})
+UserRoleModel.belongsTo(RoleModel, {targetKey: 'id', foreignKey: 'role_id'})
+UserRoleModel.belongsTo(UserModel, {targetKey: 'id', foreignKey: 'user_id'})

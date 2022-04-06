@@ -36,7 +36,7 @@ export const TaskModel = sequelize.define<TaskInstance>('task', {
     author_id: {type: DataTypes.INTEGER}
 })
 
-TaskModel.belongsTo(UserModel, {foreignKey: 'id', targetKey: 'user_id'})
-TaskModel.belongsTo(ProjectModel, {foreignKey: 'id', targetKey: 'project_id'})
-TaskModel.belongsTo(TopicModel, {foreignKey: 'id', targetKey: 'topic_id'})
-TaskModel.belongsTo(UserModel, {foreignKey: 'id', targetKey: 'author_id'})
+TaskModel.belongsTo(UserModel, {targetKey: 'id', foreignKey: 'user_id'})
+TaskModel.belongsTo(ProjectModel, {targetKey: 'id', foreignKey: 'project_id'})
+TaskModel.belongsTo(TopicModel, {targetKey: 'id', foreignKey: 'topic_id'})
+TaskModel.belongsTo(UserModel, {targetKey: 'id', foreignKey: 'author_id'})

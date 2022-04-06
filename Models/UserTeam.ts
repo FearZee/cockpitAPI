@@ -19,5 +19,5 @@ export const UserTeamModel = sequelize.define<UserTeamInstance>('user_team', {
     user_id: {type: DataTypes.INTEGER}
 })
 
-UserTeamModel.belongsTo(TeamModel, {foreignKey: 'id', targetKey: 'team_id'})
-UserTeamModel.belongsTo(UserModel, {foreignKey: 'id', targetKey: 'user_id'})
+UserTeamModel.belongsTo(TeamModel, {targetKey: 'id', foreignKey: 'team_id'})
+UserTeamModel.belongsTo(UserModel, {targetKey: 'id', foreignKey: 'user_id'})

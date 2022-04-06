@@ -19,4 +19,4 @@ export const TopicModel = sequelize.define<TopicInstance>('topic', {
     date_of_creation: {type: DataTypes.STRING},
     project_id: {type: DataTypes.INTEGER}
 })
-TopicModel.belongsTo(ProjectModel, {foreignKey: 'id', targetKey: 'project_id'})
+TopicModel.belongsTo(ProjectModel, {targetKey: 'id', foreignKey: 'project_id'})
