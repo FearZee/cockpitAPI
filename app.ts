@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 app.use('/', indexRoute)
 
 // @ts-ignore
-app.use((err: Error, res: Response, req:Request, next:NextFunction) => {
+app.use((err: Error, res: Response, req:Request) => {
     res.json({message: err.message})
 })
 
