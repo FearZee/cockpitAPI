@@ -23,5 +23,5 @@ export const CommentsModel = sequelize.define<CommentsInstance>('comments', {
     task_id: {type: DataTypes.INTEGER}
 })
 
-CommentsModel.belongsTo(UserModel, {foreignKey: 'id', targetKey: 'user_id'})
-CommentsModel.belongsTo(TaskModel, {foreignKey: 'id', targetKey: 'task_id'})
+CommentsModel.belongsTo(UserModel, {targetKey: 'id', foreignKey: 'user_id'})
+CommentsModel.belongsTo(TaskModel, {targetKey: 'id', foreignKey: 'task_id'})

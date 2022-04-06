@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 
 import indexRoute from './routes/index'
+import LoginRoute from './routes/Login'
 
 const app = express()
 
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({extended : true}))
 app.use(bodyParser.json())
 
 app.use('/', indexRoute)
+app.use('/login', LoginRoute)
 
 // @ts-ignore
 app.use((err: Error, res: Response, req:Request) => {

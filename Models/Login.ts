@@ -18,5 +18,5 @@ export const LoginModel = sequelize.define<LoginInstance>('login', {
     username: {type: DataTypes.STRING},
     password: {type: DataTypes.STRING},
     user_id: {type: DataTypes.INTEGER}
-})
-LoginModel.belongsTo(UserModel, {foreignKey: 'id', targetKey: 'user_id'})
+}, {freezeTableName: true, updatedAt: false, createdAt: false})
+LoginModel.belongsTo(UserModel, {foreignKey: 'user_id', targetKey: 'id'})

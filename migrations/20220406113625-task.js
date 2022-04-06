@@ -16,12 +16,12 @@ exports.setup = function(options, seedLink) {
 
 exports.up = function(db) {
   return db.createTable('task', {
-    id: {type: int, primaryKey: true, autoIncrement: true},
+    id: {type: "int", primaryKey: true, autoIncrement: true},
     name: 'string',
     desc: 'string',
     duration: 'string',
-    priority: 'number',
-    progress: 'number',
+    priority: 'int',
+    progress: 'int',
     user_id: {
       type: 'int',
       foreignKey: {

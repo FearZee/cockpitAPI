@@ -1,10 +1,10 @@
 {
   "dev": {
-    "host": "localhost",
+    "host": "192.168.250.4",
     "user": "postgres",
     "password": "changeme",
-    "database": "cockpit",
-    "port": 5432,
+    "database": "postgres",
+    "port": 30300,
     "driver": "pg"
   }
 }

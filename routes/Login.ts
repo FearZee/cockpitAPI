@@ -1,5 +1,6 @@
 import {Router, Request, Response} from 'express'
 import * as crypto from "crypto";
+import { LoginModel } from '../Models/Login';
 
 const router = Router()
 
@@ -13,9 +14,23 @@ const getHashedPassword = (password: string) => {
     return sha256.update(password).digest('base64')
 }
 
-router.post('/', (req: Request, res: Response) => {
-    const {username, password}: ReqBod  = req.body;
+router.post('/', async (req: Request, res: Response) => {
+    try{
+        const {username, password}: ReqBod  = req.body;
+        const hashed_password = getHashedPassword(password)
 
-    const hashed_password = getHashedPassword(password)
+        if(username && hashed_password){
+            const result = await LoginModel.findOne({where: {username: username, password: hashed_password}})
+            if(result !== null){
+                res.json({result: result})
+            }else {
+                res.json({auth: false, result: "Incorrect Username or Password"})
+            }
+        }
+    }catch (e){
+        console.log(e)
+    }
 
 })
+
+export default router
