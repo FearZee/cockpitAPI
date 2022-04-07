@@ -1,5 +1,7 @@
 import {Model, DataTypes} from 'sequelize'
 import {sequelize} from '../db'
+import { RoleModel } from './Role'
+import { UserRoleModel } from './UserRole'
 
 interface UserAttributes{
     id: number
@@ -10,7 +12,7 @@ interface UserInstance
     extends Model<UserAttributes>,
         UserAttributes{}
 
-export const UserModel = sequelize.define<UserInstance>('user',  {
-    id: {type: DataTypes.INTEGER, primaryKey: true},
+export const UserModel = sequelize.define<UserInstance>('users',  {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING}
-})
+}, {freezeTableName: true, createdAt: false, updatedAt: false})

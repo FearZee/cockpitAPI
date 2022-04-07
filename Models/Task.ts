@@ -4,16 +4,16 @@ import { ProjectModel } from './Project'
 import { TopicModel } from './Topic'
 import { UserModel } from './User'
 
-interface TaskAttributes {
-    id: number
+export interface TaskAttributes {
+    id?: number
     name: string
     desc: string
     duration: string
     priority: number
     progress: number
-    user_id: number
-    project_id: number
-    topic_id: number
+    user_id: number | null
+    project_id: number | null
+    topic_id: number | null
     is_completed: boolean
     author_id: number
 }
@@ -23,7 +23,7 @@ interface TaskInstance
         TaskAttributes{}
 
 export const TaskModel = sequelize.define<TaskInstance>('task', {
-    id: {type: DataTypes.INTEGER, primaryKey: true},
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING},
     desc: {type: DataTypes.STRING},
     duration: {type: DataTypes.STRING},
@@ -34,7 +34,7 @@ export const TaskModel = sequelize.define<TaskInstance>('task', {
     topic_id: {type: DataTypes.INTEGER},
     is_completed: {type: DataTypes.BOOLEAN},
     author_id: {type: DataTypes.INTEGER}
-})
+}, {freezeTableName: true, createdAt: false, updatedAt: false})
 
 TaskModel.belongsTo(UserModel, {targetKey: 'id', foreignKey: 'user_id'})
 TaskModel.belongsTo(ProjectModel, {targetKey: 'id', foreignKey: 'project_id'})

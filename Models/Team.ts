@@ -11,6 +11,6 @@ interface TeamInstance
         TeamAttributes{}
 
 export const TeamModel = sequelize.define<TeamInstance>('team', {
-    id: {type: DataTypes.INTEGER, primaryKey:true},
+    id: {type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
     name: {type: DataTypes.STRING}
-})
+}, {freezeTableName: true, createdAt: false, updatedAt: false})

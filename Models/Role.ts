@@ -13,4 +13,4 @@ interface RoleInstance
 export const RoleModel = sequelize.define<RoleInstance>('role', {
     id: {type: DataTypes.INTEGER, primaryKey: true},
     name: {type: DataTypes.STRING}
-})
+}, {freezeTableName: true, createdAt: false, updatedAt: false})

@@ -22,7 +22,7 @@ router.post('/', async (req: Request, res: Response) => {
         if(username && hashed_password){
             const result = await LoginModel.findOne({where: {username: username, password: hashed_password}})
             if(result !== null){
-                res.json({result: result})
+                res.json({auth: true, user_id: result.user_id})
             }else {
                 res.json({auth: false, result: "Incorrect Username or Password"})
             }
