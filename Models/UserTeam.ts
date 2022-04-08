@@ -3,8 +3,8 @@ import {sequelize} from '../db'
 import { TeamModel } from './Team'
 import { UserModel } from './User'
 
-interface UserTeamAttributes{
-    //id: number
+export interface UserTeamAttributes{
+    id?: number
     team_id: number
     user_id: number
 }
@@ -14,7 +14,7 @@ interface UserTeamInstance
         UserTeamAttributes{}
 
 export const UserTeamModel = sequelize.define<UserTeamInstance>('user_team', {
-    //id: {type: DataTypes.INTEGER, primaryKey: true},
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     team_id: {type: DataTypes.INTEGER},
     user_id: {type: DataTypes.INTEGER}
 }, {freezeTableName: true, createdAt: false, updatedAt: false})

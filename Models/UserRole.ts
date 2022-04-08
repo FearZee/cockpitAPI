@@ -3,7 +3,7 @@ import {sequelize} from '../db'
 import { UserModel } from './User'
 import { RoleModel } from './Role'
 
-interface UserRoleAttributes{
+export interface UserRoleAttributes{
     id?: number
     role_id: number
     user_id: number

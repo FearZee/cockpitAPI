@@ -1,10 +1,9 @@
 import {Model, DataTypes} from 'sequelize'
 import {sequelize} from '../db'
-import { RoleModel } from './Role'
-import { UserRoleModel } from './UserRole'
+import { TaskColsModel } from './TaskColumns'
 
-interface UserAttributes{
-    id: number
+export interface UserAttributes{
+    id?: number
     name: string
 }
 

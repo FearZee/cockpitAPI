@@ -11,7 +11,7 @@ export const initDB = async () => {
         name: string
     }
 
-    const tempUser = {
+    /*const tempUser = {
         id: 2,
         name: "Developer2"
     }
@@ -25,7 +25,7 @@ export const initDB = async () => {
 
     await LoginModel.create(tempLogin)
     
-    /*await UserModel.create(tempUser, {
+    await UserModel.create(tempUser, {
         ignoreDuplicates: true
     })*/
 

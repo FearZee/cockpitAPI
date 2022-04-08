@@ -26,7 +26,7 @@ exports.up = function(db) {
       type: 'int',
       foreignKey: {
         name: 'user_id_fk',
-        table: 'user',
+        table: 'users',
         mapping: 'id',
         rules: {
           onDelete: 'CASCADE',
@@ -63,7 +63,19 @@ exports.up = function(db) {
       type: 'int',
       foreignKey: {
         name: 'user_author_id_fk',
-        table: 'user',
+        table: 'users',
+        mapping: 'id',
+        rules: {
+          onDelete: 'CASCADE',
+          onUpdate: 'RESTRICT'
+        }
+      }
+    },
+    task_column_id: {
+      type: 'int',
+      foreignKey: {
+        name: 'task_column_id_fk',
+        table: 'task_columns',
         mapping: 'id',
         rules: {
           onDelete: 'CASCADE',

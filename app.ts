@@ -18,7 +18,7 @@ import CommentsRouter from './routes/Comments'
 
 const app = express()
 
-// initDB()
+initDB()
 
 
 app.use(cors())

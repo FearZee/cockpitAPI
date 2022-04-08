@@ -1,8 +1,8 @@
 import {Model, DataTypes} from 'sequelize'
 import {sequelize} from '../db'
 
-interface TeamAttributes{
-    id: number
+export interface TeamAttributes{
+    id?: number
     name: string
 }
 

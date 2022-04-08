@@ -33,7 +33,7 @@ exports.up = function(db) {
       type: 'int',
       foreignKey: {
         name: 'user_id_fk',
-        table: 'user',
+        table: 'users',
         mapping: 'id',
         rules: {
           onDelete: 'CASCADE',

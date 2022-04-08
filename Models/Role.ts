@@ -1,8 +1,8 @@
 import {Model, DataTypes} from 'sequelize'
 import {sequelize} from '../db'
 
-interface RoleAttributes{
-    id: number
+export interface RoleAttributes{
+    id?: number
     name: string
 }
 
@@ -11,6 +11,6 @@ interface RoleInstance
         RoleAttributes{}
 
 export const RoleModel = sequelize.define<RoleInstance>('role', {
-    id: {type: DataTypes.INTEGER, primaryKey: true},
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING}
 }, {freezeTableName: true, createdAt: false, updatedAt: false})

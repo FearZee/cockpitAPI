@@ -15,9 +15,21 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('users', {
+  return db.createTable('task_columns', {
     id: {type: 'int', primaryKey: true, autoIncrement: true},
     name: 'string',
+    user_id: {
+        type: 'int',
+        foreignKey: {
+          name: 'user_id_fk',
+          table: 'users',
+          mapping: 'id',
+          rules: {
+            onDelete: 'CASCADE',
+            onUpdate: 'RESTRICT'
+          }
+        }
+      }
   });
 };
 

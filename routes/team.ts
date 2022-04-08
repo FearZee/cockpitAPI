@@ -1,19 +1,14 @@
 import {Router, Request, Response} from 'express'
-import {TeamModel} from '../Models/Team'
+import {TeamModel, TeamAttributes} from '../Models/Team'
 import { UserModel } from '../Models/User'
 import { UserTeamModel } from '../Models/UserTeam'
 
 const router = Router()
 
-interface ReqBod{
-    id: number
-    name: string
-}
-
 router.post('/',async (req:Request, res: Response) => {
-    const {name, id}: ReqBod = req.body
+    const {name}: TeamAttributes = req.body
 
-    await TeamModel.create({id: id,name: name})
+    await TeamModel.create({name: name})
     res.json({created: true, name: name})
     
 })
