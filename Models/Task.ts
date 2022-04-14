@@ -1,5 +1,6 @@
 import {Model, DataTypes} from 'sequelize'
 import {sequelize} from '../db'
+import { DealModel } from './Deal'
 import { ProjectModel } from './Project'
 import { TaskColsModel } from './TaskColumns'
 import { TopicModel } from './Topic'
@@ -42,5 +43,5 @@ export const TaskModel = sequelize.define<TaskInstance>('task', {
 TaskModel.belongsTo(UserModel, {targetKey: 'id', foreignKey: 'user_id'})
 TaskModel.belongsTo(ProjectModel, {targetKey: 'id', foreignKey: 'project_id'})
 TaskModel.belongsTo(TopicModel, {targetKey: 'id', foreignKey: 'topic_id'})
-TaskModel.belongsTo(UserModel, {targetKey: 'id', foreignKey: 'author_id'})
+//TaskModel.belongsTo(UserModel, {targetKey: 'id', foreignKey: 'author_id'})
 TaskModel.belongsTo(TaskColsModel, {targetKey: 'id', foreignKey: 'task_column_id'})

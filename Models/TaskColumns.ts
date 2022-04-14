@@ -9,7 +9,7 @@ export interface TaskColsAttributes{
     user_id: number
 }
 
-interface TaskColsInstance
+export interface TaskColsInstance
     extends Model<TaskColsAttributes>,
         TaskColsAttributes{}
 

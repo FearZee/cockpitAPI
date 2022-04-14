@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { ProjectModel } from "../Models/Project";
 import { TaskAttributes, TaskModel } from "../Models/Task";
-import { TaskColsModel } from "../Models/TaskColumns";
+import { TaskColsAttributes, TaskColsModel } from "../Models/TaskColumns";
 import { TopicModel } from "../Models/Topic";
 import { UserModel } from "../Models/User";
 
@@ -31,7 +31,8 @@ router.post('/', async (req: Request, res: Response) => {
         project_id: project_id ? project_id : null,
         topic_id: topic_id ? topic_id: null,
         is_completed: is_completed,
-        author_id: author_id
+        author_id: author_id,
+        task_column_id: 1
     })
 
     res.json({message: "Task created"})
@@ -54,8 +55,10 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.post('/setcompleted', async (req:Request, res: Response) => {
     const {id, is_completed}: TaskAttributes = req.body
+    
 
     await TaskModel.update({is_completed: is_completed}, {where: {id: id}})
+    
 
     res.json({message: `Task ${id} is completed`})
 })
@@ -82,6 +85,17 @@ router.post('/edit', async (req: Request, res: Response) => {
         project_id: project_id,
         topic_id: topic_id
     }, {where: {id: id}})
+})
+
+router.post('/changecolumn', async (req: Request, res: Response) => {
+    const {name, user_id}: TaskColsAttributes = req.body
+    const {id}: TaskAttributes = req.body
+
+    const column = await TaskColsModel.findOne({where: {name: name}})
+    if(column){
+        TaskModel.update({task_column_id: column.id}, {where: {id: id}})
+    }
+    res.json({message: 'Task updated.'})
 })
 
 export default router

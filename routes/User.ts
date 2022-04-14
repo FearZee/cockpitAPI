@@ -4,9 +4,12 @@ import { TeamModel } from "../Models/Team"
 import { UserAttributes, UserModel } from "../Models/User"
 import { UserRoleAttributes, UserRoleModel } from "../Models/UserRole"
 import { UserTeamAttributes, UserTeamModel } from "../Models/UserTeam"
-import { TaskColsModel } from "../Models/TaskColumns"
-import { TaskModel } from "../Models/Task"
+import { TaskColsInstance, TaskColsModel } from "../Models/TaskColumns"
+import { TaskAttributes, TaskModel } from "../Models/Task"
 import { LoginModel } from "../Models/Login"
+import { TopicModel } from "../Models/Topic"
+import { DealModel } from "../Models/Deal"
+import { ProjectModel } from "../Models/Project"
 
 const router = Router()
 
@@ -74,7 +77,7 @@ router.get('/', async (req: Request, res: Response) => {
     res.json({result})
 }) 
 
-router.get('/tasks', async (req: Request, res: Response) => {
+router.post('/tasksColumns', async (req: Request, res: Response) => {
     try{
         const {id}:UserAttributes = req.body
 
@@ -84,9 +87,24 @@ router.get('/tasks', async (req: Request, res: Response) => {
 
         let testRes = {}
 
-        if(test){
-            for await (const column of test){
-                const test2 = await TaskModel.findAll({ where: { task_column_id: column.id, is_completed: false } });
+        const columns = [
+            {
+                id: 1,
+                name: "Backlog"
+            },
+            {
+                id: 2,
+                name: "In Progress"
+            },{
+                id: 10,
+                name: "Done"
+            }
+        ]
+
+
+        // if(test){
+            for await (const column of columns){
+                const test2 = await TaskModel.findAll({ where: { task_column_id: column.id, is_completed: false, user_id: id } });
 
                 const testResTemp: Object = {
                     [column.id ? column.id : 1]: {
@@ -94,14 +112,21 @@ router.get('/tasks', async (req: Request, res: Response) => {
                         items: test2
                     }
                 };
-
                 testRes = Object.assign(testRes, testResTemp)
             }       
             res.json(testRes)
-        }
+        //}
     }catch(e){
         console.log(e);
     }
+})
+
+router.post('/tasks', async (req: Request, res: Response) => {
+    const {user_id}: TaskAttributes = req.body
+
+    const tasks = await TaskModel.findAll({where:{user_id: user_id}, include: [{model: UserModel}, {model: TopicModel}, {model: ProjectModel, include: [{model: DealModel}]}],})
+
+    res.json({tasks: tasks})
 })
 
 export default router
