@@ -41,6 +41,18 @@ exports.up = function(db) {
         }
       }
     },
+    role_id: {
+      type: 'int',
+      foreignKey: {
+        name: 'user_role_id_team_fk',
+        table: 'user_role',
+        mapping: 'id',
+        rules: {
+          onDelete: 'CASCADE',
+          onUpdate: 'RESTRICT'
+        }
+      }
+    },
   });
 };
 

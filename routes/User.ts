@@ -26,6 +26,8 @@ router.post('/add', async (req: Request, res: Response) => {
     const newUser = await UserModel.create({name: name})
 
     const usernameTemp = newUser.name.split(' ')
+    console.log(usernameTemp);
+    
 
     const username = `${usernameTemp[0]}.${usernameTemp[1]}`
 
@@ -39,18 +41,23 @@ router.post('/add', async (req: Request, res: Response) => {
 
     const date = new Date().toLocaleDateString()
 
-    await UserRoleModel.create({
+    const role = await UserRoleModel.create({
         role_id: role_id, 
         user_id: newUser.id!,
         date_of_creation: date
     })
 
-    TaskColumns.map(async (col) => {
-        await TaskColsModel.create({name: col, user_id: newUser.id!})
-    })
+    console.log(role.id);
+    
 
     // Add User to Team ?
-    await UserTeamModel.create({team_id: team_id, user_id: newUser.id!})
+    try{
+        await UserTeamModel.create({team_id: team_id, user_id: newUser.id!, role_id: role.id})
+    }catch(e){
+        console.log(e);
+        
+    }
+    
 
     res.json({message: "User created."})
     
@@ -67,12 +74,19 @@ router.post('/addteam', async (req: Request, res:Response) => {
     res.json({added: true, user: user, team:team})
 })
 
-router.get('/', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
     const {id}: UserAttributes = req.body
-    const result = await UserRoleModel.findAll({
-        include: [{model: UserModel}, {model: RoleModel}],
-        where: {user_id: id}
+    // const result = await UserRoleModel.findAll({
+    //     include: [{model: UserModel}, {model: RoleModel}],
+    //     where: {user_id: id}
+    // })
+
+    const result = await UserModel.findOne({
+        where: {id: id}
     })
+
+    console.log(result);
+    
 
     res.json({result})
 }) 
@@ -96,13 +110,12 @@ router.post('/tasksColumns', async (req: Request, res: Response) => {
                 id: 2,
                 name: "In Progress"
             },{
-                id: 10,
+                id: 3,
                 name: "Done"
             }
         ]
 
 
-        // if(test){
             for await (const column of columns){
                 const test2 = await TaskModel.findAll({ where: { task_column_id: column.id, is_completed: false, user_id: id } });
 
@@ -115,7 +128,6 @@ router.post('/tasksColumns', async (req: Request, res: Response) => {
                 testRes = Object.assign(testRes, testResTemp)
             }       
             res.json(testRes)
-        //}
     }catch(e){
         console.log(e);
     }
