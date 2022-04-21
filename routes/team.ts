@@ -1,8 +1,10 @@
-import {Router, Request, Response} from 'express'
+import {Router, Request, Response, response} from 'express'
 import { request } from 'http'
+import { RoleModel } from '../Models/Role'
 import { TaskModel } from '../Models/Task'
 import {TeamModel, TeamAttributes} from '../Models/Team'
 import { UserModel } from '../Models/User'
+import { UserRoleModel } from '../Models/UserRole'
 import { UserTeamAttributes, UserTeamModel } from '../Models/UserTeam'
 
 const router = Router()
@@ -25,7 +27,7 @@ router.get('/', async (req: Request, res: Response) => {
     }
 })
 
-router.get('/users', async(req:Request, res: Response) => {
+router.post('/users', async(req:Request, res: Response) => {
     interface ReqBod{
         id?: number
         name?: string
@@ -34,7 +36,7 @@ router.get('/users', async(req:Request, res: Response) => {
     
 
     if(id){
-       const users = await UserTeamModel.findAll({where: {team_id: id}})
+       const users = await UserTeamModel.findAll({where: {team_id: id}, include: [{model:UserModel},{model: UserRoleModel, include: [{model: RoleModel}]}]})
        res.json({users: users})
     }
     if(name){
@@ -125,9 +127,36 @@ router.post('/alltasks', async (req: Request, res: Response) => {
 
     console.log(testRes)
     res.json(testRes)
+ 
+})
 
 
-    
+router.get('/roles', async (req: Request, res: Response) => {
+    try{
+        const result = await RoleModel.findAll()
+
+        res.json(result)
+    }catch(e){
+        console.log(e);
+    }
+})
+
+router.post('/delete', async(req: Request, res: Response) => {
+    interface ReqBody{
+        userId: number
+        teamId: number
+    }
+    try{
+        const {userId, teamId}: ReqBody = req.body
+
+        await UserTeamModel.destroy({where: {user_id: userId, team_id: teamId}})
+        
+        res.json({message: "User deleted from Team"})
+
+    }catch(e){
+        console.log(e);
+        
+    }
 })
 
 export default router
