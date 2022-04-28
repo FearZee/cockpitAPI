@@ -30,6 +30,8 @@ router.post('/', async (req: Request, res: Response) => {
             const result = await LoginModel.findOne({where: {username: username, password: hashed_password}})
             if(result !== null){
                 const roles = await UserTeamModel.findAll({where: {user_id: result.user_id}, include: [{model: TeamModel},{model: UserRoleModel, include: [{model: RoleModel}]}]})
+                console.log(roles);
+                
                 
                 const token = jwt.sign(result.user_id, 'jwtSecret')
 
